@@ -19,12 +19,6 @@
     <%= file_field :slide, :img  %>
   <% end %>
 
-  <% f.field_container :locale do %>
-    <%= f.label :locale, t("locale") %><br />
-    <%= error_message_on :slide, :locale, :class => 'fullwidth title'  %>
-    <%= collection_select(:slide, :locale, AVAILABLE_LOCALES.keys, :to_s, :to_s, {:include_blank => true}) %>
-  <% end %>
-
   <% f.field_container :url do %>
     <%= f.label :url, t("target_url") %><span class="required">*</span><br />
     <%= error_message_on :slide, :url, :class => 'fullwidth title'  %>
