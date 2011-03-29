@@ -2,8 +2,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_slideshows'
   s.version     = '1.5.0'
-  s.summary     = 'Add gem summary here'
-  #s.description = 'Add (optional) gem description here'
+  s.summary     = 'Adds slideshow support to Spree'
+  s.description = 'Add slideshows to your Spree store'
   s.required_ruby_version = '>= 1.8.7'
   
   # s.author            = 'Valentino Stoll'
