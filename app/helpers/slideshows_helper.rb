@@ -54,7 +54,7 @@ module SlideshowsHelper
           img_options[:height] = params[:image_height] if params[:image_height]
           img_options[:weight] = params[:image_weight] if params[:image_weight]
           
-          link_to (product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name)
+          link_to(product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name)
         end.join("\n")
       end
   end
