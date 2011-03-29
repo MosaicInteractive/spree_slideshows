@@ -11,7 +11,7 @@
     <%= text_field :slide, :groups  %>
   <% end %>
 
-  <%= image_tag @slide.img.url(:thumb) %>
+  <%= image_tag @slide.img.url(:thumb) if @slide.img? %>
 
   <% f.field_container :img_file_name do %>
     <%= f.label :img_file_name, t("filename") %><span class="required">*</span><br />
