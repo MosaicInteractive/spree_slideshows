@@ -13,7 +13,9 @@ module SlideshowsHelper
     params[:image_height]||=false
     params[:image_width]||=false
 
-    add_arrows = ""
+    content = ''
+    output = ''
+    #add_arrows = ""
     #if (params[:arrows])
     #  add_arrows = <<-links
     #  <a href="#" class="prev"><img src="/images/arrow-prev.png" height="#{params[:arrow_size]}" alt="Arrow Prev"></a>
