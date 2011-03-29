@@ -1,4 +1,4 @@
-<%= render :partial => 'admin/shared/configuration_menu' %>
+<%= render 'admin/shared/configuration_menu' %>
 
 <div class='toolbar'>
   <ul class='actions'>
@@ -14,29 +14,24 @@
 <table class="index">
   <thead>
     <tr>
-    <% hook :admin_slides_index_headers do %>         
       <th><%= t("name") %></th>
       <th><%= t("groups") %></th>
       <th><%= t("locale") %></th>
       <th><%= t("enabled") %></th>
       <th><%= t("included") %></th>
       <th><%= t("position") %></th>     
-    <% end %>
       <th><%= t("action") %></th>
     </tr>
   </thead>
   <tbody>
     <% @slides.each do |slide|%>
-      <tr id="<%= dom_id slide %>">     
-        <%- locals = {:slide => slide} -%>
-        <% hook :admin_slides_index_rows, locals do %>        
+      <tr id="<%= dom_id slide %>" class="<%= cycle('even', 'odd') %>">
           <td><%= slide.name %></td>
           <td><%= slide.groups %></td>
           <td><%= slide.locale %></td>
           <td><%= slide.enabled ? t(:yes) : t(:no) %></td>
           <td><%= slide.included ? t(:yes) : t(:no) %></td>
-	  <td><%= slide.position %></td>
-        <% end %>
+	      <td><%= slide.position %></td>
         <td>
         	<%= link_to_edit slide %> &nbsp;
         	<%= link_to_delete slide %>

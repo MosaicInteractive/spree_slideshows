@@ -1,3 +1,3 @@
-map.namespace :admin do |admin|
-  admin.resources :slides
+namespace :admin do
+  resources :slides
 end

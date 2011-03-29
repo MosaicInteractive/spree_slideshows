@@ -1,4 +1,4 @@
-<% hook :admin_inside_slideshow_form do %>
+
   <% f.field_container :name do %>
     <%= f.label :name, t("name") %> <span class="required">*</span><br />
     <%= error_message_on :slide, :name, :class => 'fullwidth title'  %>
@@ -62,5 +62,3 @@
     <%= error_message_on :slide, :position, :class => 'fullwidth title'  %>
     <%= text_field :slide, :position  %>
   <% end %>
-
-<% end %>

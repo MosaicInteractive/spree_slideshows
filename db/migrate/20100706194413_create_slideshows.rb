@@ -2,7 +2,6 @@ class CreateSlideshows < ActiveRecord::Migration
   def self.up
     create_table :slides do |t|
       t.string :name
-      t.string :locale
       t.string :url
       t.integer :position
       t.boolean :enabled
