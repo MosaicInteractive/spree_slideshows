@@ -1,8 +1,8 @@
 namespace :spree_slideshows do
   desc "Copies all migrations and assets (NOTE: This will be obsolete with Rails 3.1)"
   task :install do
-    Rake::Task['slider:install:migrations'].invoke
-    Rake::Task['slider:install:assets'].invoke
+    Rake::Task['spree_slideshows:install:migrations'].invoke
+    Rake::Task['spree_slideshows:install:assets'].invoke
   end
 
   namespace :install do
