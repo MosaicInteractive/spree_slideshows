@@ -15,26 +15,6 @@ module SlideshowsHelper
     params[:image_height]||=false
     params[:image_width]||=false
 
-    if not @content_for_head_added
-      content_for(:head) { stylesheet_link_tag 'slideshow.css' }
-      content_for(:head) { javascript_include_tag 'slides.min.jquery.js' }
-      @content_for_head_added = true
-    end
-      
-    hook :inside_head do
-      %{ <script type="text/javascript">
-             $(function(){
-                        $('##{params[:div_id]}').slides({
-                                preload: true,
-                                preloadImage: '/images/loading.gif',
-                                play: 5000,
-                                pause: 2500,
-                                hoverPause: true,
-                        });
-                });
-        </script> }
-    end
-
     add_arrows = ""
     if (params[:arrows])
       add_arrows = <<-links
