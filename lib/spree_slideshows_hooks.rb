@@ -40,7 +40,7 @@ class SpreeSlideshowsHooks < Spree::ThemeSupport::HookListener
           });
         });
       <% end %>)
-
+  end
 
   # Homepage hooks for default homepage slideshow
   insert_before :homepage_products, 'shared/display_gallery'
