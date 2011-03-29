@@ -10,10 +10,9 @@ class Slide < ActiveRecord::Base
                     :url => "/assets/slides/:id/:style_:basename.:extension",
                     :path => ":rails_root/public/assets/slides/:id/:style_:basename.:extension"
 
-  named_scope :included, :conditions => ["enabled = ? and included = ?", true, true]
-  named_scope :not_included, :conditions => ["enabled = ? and included = ?", true, false]
-  named_scope :order_by_pos, :order => "position"
-  named_scope :localized, lambda { |locale| { :conditions => [ "locale = ? OR locale = ?", "", locale ] } }
-  named_scope :in_group, lambda { |group| { :conditions => [ "groups LIKE ? OR groups IS NULL OR groups = ?", "%#{group}%", "" ] } }
+  scope :included, where(:enabled => true, :included => true)
+  scope :not_included, where(:enabled => true, :included => false)
+  scope :order_by_pos, order(:position)
+  scope :in_group, lambda { |group| where("groups LIKE ? OR groups IS NULL OR groups = ?", "%#{group}%", "") }
 
 end

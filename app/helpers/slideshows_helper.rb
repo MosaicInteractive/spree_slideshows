@@ -64,8 +64,8 @@ module SlideshowsHelper
       max = params[:max]
       group = params[:group]
       if not params[:taxon]
-        slides = Slide.included.localized(I18n.locale.to_s).in_group(group)
-        extra_slides = Slide.not_included.localized(I18n.locale.to_s).in_group(group).sort_by { rand }.slice(0...max-slides.count)
+        slides = Slide.included.in_group(group)
+        extra_slides = Slide.not_included.in_group(group).sort_by { rand }.slice(0...max-slides.count)
         slides = (slides + extra_slides).sort_by { |slide| slide.position }
       
         slides.map do |slide|

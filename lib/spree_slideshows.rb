@@ -10,6 +10,9 @@ module SpreeSlideshows
       Dir.glob(File.join(File.dirname(__FILE__), "../app[/**/*_decorator*.rb")) do |c|
         Rails.env.produciton? ? require(c) : load(c)
       end
+      Spree::BaseController.class_eval do
+        helper SlideshowsHelper
+      end
     end
 
     config.to_prepare &method(:activate).to_proc
