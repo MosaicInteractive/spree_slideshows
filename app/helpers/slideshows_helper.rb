@@ -1,8 +1,6 @@
 module SlideshowsHelper
 
   def insert_slideshow(params={})
-    @content_for_head_added ||= false
-
     params[:group]||=""
     params[:max]||=5
     params[:arrows]||=true
@@ -16,34 +14,31 @@ module SlideshowsHelper
     params[:image_width]||=false
 
     add_arrows = ""
-    if (params[:arrows])
-      add_arrows = <<-links
-      <a href="#" class="prev"><img src="/images/arrow-prev.png" height="#{params[:arrow_size]}" alt="Arrow Prev"></a>
-      <a href="#" class="next"><img src="/images/arrow-next.png" height="#{params[:arrow_size]}" alt="Arrow Next"></a>
-      links
+    #if (params[:arrows])
+    #  add_arrows = <<-links
+    #  <a href="#" class="prev"><img src="/images/arrow-prev.png" height="#{params[:arrow_size]}" alt="Arrow Prev"></a>
+    #  <a href="#" class="next"><img src="/images/arrow-next.png" height="#{params[:arrow_size]}" alt="Arrow Next"></a>
+    #  links
+    #end
+
+    if params[:group] == 'Home'
+      slide_images(params).each { |slide| content << content_tag(:li, content_tag(:a, image_tag(slide.img.url), :title => slide.name, :href => slide.url)) }
+      output << content_tag(:div, :class => 'anythingSlider') do
+        content_tag(:div, content_tag(:ul, content.html_safe), :class => 'wrapper')
+      end
+    else
+      slide_images(params).each { |slide| content << content_tag(:a, image_tag(slide.img.url), :title => slide.name, :href => slide.url) }
+      output << content_tag(:div, content.html_safe, :class => 'Banner')
     end
 
-    slides_div = content_tag :div, :id => "#{params[:div_id]}" do
-      [content_tag(:div, slide_images(params), :class => "slides_container"), add_arrows].join("\n")
-    end
-
-    add_frame = ""
-    if (params[:frame])
-      add_frame = <<-frame
-                  <img src="/images/frame.png" width="#{params[:width]}" height="#{params[:height]}" alt="Example Frame" id="frame">
-                  frame
-    end
-
-    content_tag :div, :class => "slideshow" do
-      [slides_div, add_frame].join("\n")
-    end
+    output.html_safe
 
   end
 
   def slide_images(params)
       max = params[:max]
       group = params[:group]
-      if not params[:taxon]
+      unless params[:taxon]
         slides = Slide.included.in_group(group)
         extra_slides = Slide.not_included.in_group(group).sort_by { rand }.slice(0...max-slides.count)
         slides = (slides + extra_slides).sort_by { |slide| slide.position }
