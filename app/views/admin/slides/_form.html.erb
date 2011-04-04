@@ -14,7 +14,7 @@
   <% f.field_container :content do %>
     <%= f.label :content, t("content") %><br />
     <%= error_message_on :slide, :content, :class => 'fullwidth content' %>
-    <%= text_area :content, { :style => "width:100%"} %>
+    <%= text_area :slide, :content, { "style" => "width:100%"} %>
   <% end %>
 
   <%= image_tag @slide.img.url(:thumb) if @slide.img? %>
