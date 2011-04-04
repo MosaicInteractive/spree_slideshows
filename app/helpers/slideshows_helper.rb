@@ -5,39 +5,64 @@ module SlideshowsHelper
     params[:max]||=5
     params[:arrows]||=true
     params[:frame]||=true
-    params[:div_id]||="slides"
+    params[:id]||="slider"
     params[:arrow_size]||=24
     params[:width]||=739
     params[:height]||=341
     params[:taxon]||=false
     params[:image_height]||=false
     params[:image_width]||=false
+    params[:fx]||=''
+    params[:build_arrows]||=false
+    params[:build_navigation]||=false
+    params[:start_stopped]||=false
+    params[:auto_play]||=true
 
     content = ''
     output = ''
-    #add_arrows = ""
-    #if (params[:arrows])
-    #  add_arrows = <<-links
-    #  <a href="#" class="prev"><img src="/images/arrow-prev.png" height="#{params[:arrow_size]}" alt="Arrow Prev"></a>
-    #  <a href="#" class="next"><img src="/images/arrow-next.png" height="#{params[:arrow_size]}" alt="Arrow Next"></a>
-    #  links
-    #end
+
+    hook :inside_head do
+      %( <% javascript_tag do %>
+          $(function(){
+            $('##{params[:id]}')
+            .anythingSlider({
+              width: #{params[:width]},
+              height: #{params[:height]},
+              resizeContents: false,
+              easing: "easeInOutExpo",
+              autoPlay: #{params[:auto_play]},
+              delay: 7000,                       // How long between slide transitions (autoPlay mode only)
+              startStopped: #{params[:start_stopped]},               // Start stop if autoPlay
+              animationTime: 600,                // How long the slide transition takes
+              hashTags: false,                   // Should links change the hashtag in the URL?
+              buildArrows: #{params[:build_arrows]},
+              toggleArrows: true,                // Show nav arrows on hover else hide
+              buildNavigation: false,            // If true, builds a list of anchor links to link to each slide
+              pauseOnHover: true,
+              startText: "",
+              stopText: "",
+              navigationFormatter: formatText    // Details in anythingslider source
+            })
+            .anythingSliderFx({
+              // base FX definitions
+              '.fade'         : [ 'fade' ]
+            });
+          });
+        <% end %>)
+    end
 
     if params[:group] == 'Home'
-      slide_images(params).each { |slide| content << content_tag(:li, content_tag(:a, image_tag(slide.img.url), :title => slide.name, :href => slide.url)) }
-      output << content_tag(:div, :class => 'anythingSlider') do
+      slide_panels(params).each { |slide| content << content_tag(:li, content_tag(:a, slide.html_safe, :title => slide.name, :href => slide.url)) }
+      output << content_tag(:ul, content.html_safe, :id => "#{params[:id]}", :class => 'anythingSlider') do
         content_tag(:div, content_tag(:ul, content.html_safe), :class => 'wrapper')
       end
-    else
-      slide_images(params).each { |slide| content << content_tag(:a, image_tag(slide.img.url), :title => slide.name, :href => slide.url) }
-      output << content_tag(:div, content.html_safe, :class => 'Banner')
     end
 
     output.html_safe
 
   end
 
-  def slide_images(params)
+  def slide_panels(params)
       max = params[:max]
       group = params[:group]
       unless params[:taxon]
@@ -46,7 +71,11 @@ module SlideshowsHelper
         slides = (slides + extra_slides).sort_by { |slide| slide.position }
       
         slides.map do |slide|
-          link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
+          if slide.img.present? and slide.img.url.present?
+            link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
+          else
+            content_tag(:div, slide.body.html_safe, :class => 'textSlide')
+          end
         end.join("\n")
       else
         products = Product.in_taxons(params[:taxon]).take(max)

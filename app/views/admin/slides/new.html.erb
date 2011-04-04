@@ -3,6 +3,6 @@
 <h1><%= t("new_slide") %></h1>
 <%= render "shared/error_messages", :target => @slide %>
 <% form_for(@slide, :url => collection_url, :html => { :multipart => true }) do |f| %>
-  <%= render "form", :locals => { :f => f } %>
+  <%= render :partial => "form", :locals => { :f => f } %>
   <%= render "admin/shared/new_resource_links" %>
 <% end %>
