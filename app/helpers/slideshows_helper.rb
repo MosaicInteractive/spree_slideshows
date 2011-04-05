@@ -1,6 +1,7 @@
 module SlideshowsHelper
 
   def insert_slideshow(params={})
+    @content_for_head_added ||= false
     params[:group]||=""
     params[:max]||=5
     params[:arrows]||=true
@@ -21,8 +22,9 @@ module SlideshowsHelper
     content = ''
     output = ''
 
-    hook :inside_head do
-      %( <% javascript_tag do %>
+    content_for :head do
+      unless @content_for_head_added
+      %( <%= javascript_tag do %>
           $(function(){
             $('##{params[:id]}')
             .anythingSlider({
@@ -49,13 +51,12 @@ module SlideshowsHelper
             });
           });
         <% end %>)
+        @content_for_head_added = true
+      end
     end
 
-    if params[:group] == 'Home'
-      slide_panels(params).each { |slide| content << content_tag(:li, content_tag(:a, slide.html_safe, :title => slide.name, :href => slide.url)) }
-      output << content_tag(:ul, content.html_safe, :id => "#{params[:id]}", :class => 'anythingSlider') do
-        content_tag(:div, content_tag(:ul, content.html_safe), :class => 'wrapper')
-      end
+    output << content_tag(:ul, content.html_safe, :id => "#{params[:id]}", :class => 'anythingSlider') do
+      content_tag(:div, content_tag(:ul, slide_panels(params).html_safe), :class => 'wrapper')
     end
 
     output.html_safe
@@ -85,7 +86,7 @@ module SlideshowsHelper
           img_options[:height] = params[:image_height] if params[:image_height]
           img_options[:weight] = params[:image_weight] if params[:image_weight]
           
-          link_to(product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name)
+          content_tag(:li, link_to(product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name))
         end.join("\n")
       end
   end

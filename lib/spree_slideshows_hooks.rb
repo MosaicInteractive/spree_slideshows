@@ -12,7 +12,7 @@ class SpreeSlideshowsHooks < Spree::ThemeSupport::HookListener
     %(<%= insert_slideshow(:max => 2, :group => 'Home') %>)
   end
 
-  insert_after :inside_head do
+  insert_after :head do
     %(<%= stylesheet_link_tag 'slider' %>
       <%= javascript_include_tag 'jquery.easing.1.2.js', 'jquery.anythingslider.js', 'jquery.anythingslider.fx.min.js' %>
       <% javascript_tag do %>
