@@ -14,11 +14,25 @@ class SpreeSlideshowsHooks < Spree::ThemeSupport::HookListener
 
   insert_after :inside_head do
     %(<%= stylesheet_link_tag 'slider' %>
-      <%= javascript_include_tag 'jquery.easing.1.2.js', 'jquery.anythingslider.js', 'jquery.anythingslider.fx.min.js' %>
       <% javascript_tag do %>
-        function formatText(index, panel) {
-          return index + "";
+        function slideSwitch() {
+          var $active = $('.slideshow a.active');
+
+          if( $active.length == 0 ) $active = $('.slideshow a:last');
+          
+          var $next = $active.next().length ? $active.next() : $('.slideshow a:first' );
+
+          $next.addClass('last-active');
+                                                        
+          $next.css({opacity: 0.0})
+            .addClass('active')
+            .animate({opacity: 1.0}, 1000, function() {
+                $active.removeClass('active last-active');
+          });
         }
+        $(function() {
+          setInterval( "slideSwitch()", 5000 );
+        });
       <% end %>)
   end
 
