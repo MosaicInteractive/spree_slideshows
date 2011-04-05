@@ -22,8 +22,8 @@ module SlideshowsHelper
     content = ''
     output = ''
 
-    content_for :head do
-      unless @content_for_head_added
+    unless @content_for_head_added
+    content_for(:head) do
       %( <%= javascript_tag do %>
           $(function(){
             $('##{params[:id]}')
@@ -51,8 +51,8 @@ module SlideshowsHelper
             });
           });
         <% end %>)
-        @content_for_head_added = true
       end
+      @content_for_head_added = true
     end
 
     output << content_tag(:ul, content.html_safe, :id => "#{params[:id]}", :class => 'anythingSlider') do
