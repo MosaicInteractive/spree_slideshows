@@ -13,6 +13,7 @@ module SlideshowsHelper
     params[:build_navigation]||=false
     params[:start_stopped]||=false
     params[:auto_play]||=true
+    params[:max]||=5
 
     output = ''
 
