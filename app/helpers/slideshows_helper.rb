@@ -17,7 +17,6 @@ module SlideshowsHelper
     output = ''
 
     output << content_tag(:div, slide_panels(params).html_safe, :class => '.slideshow', :id => "#{id}")
-    end
 
     output.html_safe
 
