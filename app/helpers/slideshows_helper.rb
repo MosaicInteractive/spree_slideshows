@@ -1,7 +1,7 @@
 module SlideshowsHelper
 
   def insert_slideshow(params={})
-    @content_for_head_added ||= false
+    @@slideshow_count||= 0
     params[:group]||=""
     params[:id]||="slider"
     params[:width]||=739
@@ -17,7 +17,8 @@ module SlideshowsHelper
 
     output = ''
 
-    output << content_tag(:div, slide_panels(params).html_safe, :class => '.slideshow', :id => "#{id}")
+    @@slideshow_count += 1
+    output << content_tag(:div, slide_panels(params).html_safe, :class => '.slideshow', :id => "#{params[:id]}_#{@@slider_count}")
 
     output.html_safe
 
