@@ -1,6 +1,9 @@
 module SlideshowsHelper
 
   def insert_slideshow(params={})
+    unless Slide.in_group(params[:group])
+      return ''
+    end
     @@slideshow_count||= 0
     params[:group]||=""
     params[:id]||="slider"
@@ -15,10 +18,15 @@ module SlideshowsHelper
     params[:auto_play]||=true
     params[:max]||=5
 
+    theslides = slide_panels(params)
+    unless theslides.present?
+        return ''
+    end
+
     output = ''
 
     @@slideshow_count += 1
-    output << content_tag(:div, slide_panels(params).html_safe, :class => '.slideshow', :id => "#{params[:id]}_#{@@slider_count}")
+    output << content_tag(:div, theslides(params).html_safe, :class => '.slideshow', :id => "#{params[:id]}_#{@@slider_count}")
 
     output.html_safe
 
