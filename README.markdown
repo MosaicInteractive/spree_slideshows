@@ -1,14 +1,17 @@
 # SUMMARY #
 
 This extension allows easy addition and administration of slideshows in Spree.
+#NOTE
+This version works for heroku and it has been tested with Spree 0.60.x
+
 
 # INSTALLATION #
 
    Clone the git repo to SPREE_ROOT/vendor/extensions/slideshows or install the extension
 
-	git clone git://github.com/josv/spree-slideshows.git slideshows
+	git clone git://github.com/nebuladieas/spree-slideshows.git slideshows
       or
-	script/extension install git://github.com/josv/spree-slideshows.git
+	script/extension install git://github.com/nebuladieas/spree-slideshows.git
 
    Migrate the database
 
