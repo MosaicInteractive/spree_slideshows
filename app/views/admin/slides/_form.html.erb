@@ -1,4 +1,4 @@
-<% hook :admin_inside_slideshow_form do %>
+
   <% f.field_container :name do %>
     <%= f.label :name, t("name") %> <span class="required">*</span><br />
     <%= error_message_on :slide, :name, :class => 'fullwidth title'  %>
@@ -11,18 +11,18 @@
     <%= text_field :slide, :groups  %>
   <% end %>
 
-  <%= image_tag @slide.img.url(:thumb) %>
+  <% f.field_container :content do %>
+    <%= f.label :content, t("content") %><br />
+    <%= error_message_on :slide, :content, :class => 'fullwidth content' %>
+    <%= text_area :slide, :content, { "style" => "width:100%"} %>
+  <% end %>
+
+  <%= image_tag @slide.img.url(:thumb) if @slide.img? %>
 
   <% f.field_container :img_file_name do %>
     <%= f.label :img_file_name, t("filename") %><span class="required">*</span><br />
     <%= error_message_on :slide, :img_file_name, :class => 'fullwidth title'  %>
     <%= file_field :slide, :img  %>
-  <% end %>
-
-  <% f.field_container :locale do %>
-    <%= f.label :locale, t("locale") %><br />
-    <%= error_message_on :slide, :locale, :class => 'fullwidth title'  %>
-    <%= collection_select(:slide, :locale, AVAILABLE_LOCALES.keys, :to_s, :to_s, {:include_blank => true}) %>
   <% end %>
 
   <% f.field_container :url do %>
@@ -62,5 +62,3 @@
     <%= error_message_on :slide, :position, :class => 'fullwidth title'  %>
     <%= text_field :slide, :position  %>
   <% end %>
-
-<% end %>

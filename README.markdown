@@ -5,17 +5,24 @@ This extension allows easy addition and administration of slideshows in Spree.
 This version works for heroku and it has been tested with Spree 0.60.x
 
 
+# NOTE #
+
+
+This version works for heroku and it has been tested with Spree 0.60.x
+
 # INSTALLATION #
 
-   Clone the git repo to SPREE_ROOT/vendor/extensions/slideshows or install the extension
+   Add the spree_slideshows gem to your Gemfile
 
-	git clone git://github.com/nebuladieas/spree-slideshows.git slideshows
-      or
-	script/extension install git://github.com/nebuladieas/spree-slideshows.git
+	gem 'spree_slideshows', :git => 'git://github.com/nebulaideas/spree_slideshows.git', :branch => '0-50-x'
 
    Migrate the database
 
 	rake db:migrate
+
+   Copy assets
+
+	rake spree_slideshows:install
 
    Restart server
 

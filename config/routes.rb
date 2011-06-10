@@ -1,3 +1,5 @@
-map.namespace :admin do |admin|
-  admin.resources :slides
+Rails.application.routes.draw do
+  namespace :admin do
+    resources :slides
+  end
 end

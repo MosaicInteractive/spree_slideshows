@@ -6,14 +6,18 @@ class Slide < ActiveRecord::Base
   has_attached_file :img,
                     :styles => {
                        :thumb => "100x100#"
-                    },
-                    :url => "/assets/slides/:id/:style_:basename.:extension",
-                    :path => ":rails_root/public/assets/slides/:id/:style_:basename.:extension"
+                    },    :url => "/assets/products/:id/:style/:basename.:extension",
+    :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension",
+    :storage => Rails.env == 'production' ? 's3' : 'filesystem',
+    :s3_credentials => {
+      :access_key_id => ENV['S3_KEY'],
+      :secret_access_key => ENV['S3_SECRET']
+    },
+    :bucket => ENV['S3_BUCKET']
 
-  named_scope :included, :conditions => ["enabled = ? and included = ?", true, true]
-  named_scope :not_included, :conditions => ["enabled = ? and included = ?", true, false]
-  named_scope :order_by_pos, :order => "position"
-  named_scope :localized, lambda { |locale| { :conditions => [ "locale = ? OR locale = ?", "", locale ] } }
-  named_scope :in_group, lambda { |group| { :conditions => [ "groups LIKE ? OR groups IS NULL OR groups = ?", "%#{group}%", "" ] } }
+  scope :included, where(:enabled => true, :included => true)
+  scope :not_included, where(:enabled => true, :included => false)
+  scope :order_by_pos, order(:position)
+  scope :in_group, lambda { |group| where("groups LIKE ? OR groups IS NULL OR groups = ?", "%#{group}%", "") }
 
 end
