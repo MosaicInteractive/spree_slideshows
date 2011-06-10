@@ -1,0 +1,14 @@
+---
+es:
+  edit_slide: Editar Slide
+  enabled: Habilitar
+  filename: Archivo
+  groups: Grupo
+  included: "Incluir en la selección"
+  manage_slideshow: "Administrar los Slides de la Presentación"
+  name: Nombre
+  new_slide: Nuevo Slide
+  position: Posción
+  slides: Slides
+  slideshow_slides: "Presentación de Slides"
+  target_url: "URL destino"
