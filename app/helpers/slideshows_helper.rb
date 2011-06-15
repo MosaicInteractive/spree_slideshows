@@ -26,7 +26,7 @@ module SlideshowsHelper
     output = ''
 
     @@slideshow_count += 1
-    output << content_tag(:div, theslides.html_safe, :class => 'slideshow', :id => "#{params[:id]}_#{@@slideshow_count}")
+    output << content_tag(:div, theslides.html_safe, :class => '.slideshow', :id => "#{params[:id]}_#{@@slideshow_count}")
 
     output.html_safe
 
