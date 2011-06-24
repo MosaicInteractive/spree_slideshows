@@ -5,7 +5,10 @@ Gem::Specification.new do |s|
   s.summary     = 'Adds slideshow support to Spree'
   s.description = 'Add slideshows to your Spree store'
   s.required_ruby_version = '>= 1.8.7'
-  
+  s.author = 'Ismael G Marin'
+  s.email = 'ismael.marin@gmail.com'
+  s.homepage = 'http://www.nebulaideas.com'
+
   # s.author            = 'Valentino Stoll'
   # s.email             = 'valentino@mosaicwebsite.com'
   # s.homepage          = 'http://www.mosaicwebsite.com'
@@ -14,7 +17,5 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
   
-  s.has_rdoc = true
-
-  s.add_dependency('spree_core', '>= 0.30.0')
+  s.add_dependency('spree_core', '>= 0.50.0')
 end
