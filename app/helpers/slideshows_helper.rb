@@ -64,7 +64,7 @@ module SlideshowsHelper
     output = ''
       
     @@slideshow_count += 1
-    output << content_tag( :div, [slides_div, add_frame, scripts].join("\n").html_safe, :class => "slideshow", :id => "#{params[:id]}_#{@@slideshow_count}")
+    output << content_tag( :div, [slides_div, add_frame, scripts].join("\n").html_safe, :class => "slideshow", :id => "#{params[:div_id]}_#{@@slideshow_count}")
            
     output.html_safe
 
@@ -78,25 +78,25 @@ module SlideshowsHelper
         extra_slides = Slide.not_included.in_group(group).sort_by { rand }.slice(0...max-slides.count)
         slides = (slides + extra_slides).sort_by { |slide| slide.position }
       
-        slides.map do |slide|
+        output = slides.map do |slide|
           if slide.img.present? and slide.img.url.present?
             link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
           else
             content_tag(:div, slide.body.html_safe, :class => 'textSlide')
           end
         end.join("\n")
-        raw(slides)
+        raw(output)
       else
         products = Product.in_taxons(params[:taxon]).take(max)
 
-        products.map do |product|
+        output = products.map do |product|
           img_options = {}
           img_options[:height] = params[:image_height] if params[:image_height]
           img_options[:weight] = params[:image_weight] if params[:image_weight]
           
           link_to(product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name)
         end.join("\n")
-        raw(products)
+        raw(output)
       end
   end
 
