@@ -1,17 +1,17 @@
 <% if !@slideshow.blank? %>
   <% if @slideshow.group.blank? %>
     <% if @slideshow.max.blank? %>
-      <%= insert_slideshow %>
+      <%== insert_slideshow %>
     <% else %>
-      <%= insert_slideshow :max => @slideshow.max %>
+      <%== insert_slideshow :max => @slideshow.max %>
     <% end %>
   <% else %>
     <% if @slideshow.max.blank? %>
-      <%= insert_slideshow :group => @slideshow.group %>
+      <%== insert_slideshow :group => @slideshow.group %>
     <% else %>
-      <%= insert_slideshow :group => @slideshow.group, :max => @slideshow.max %>
+      <%== insert_slideshow :group => @slideshow.group, :max => @slideshow.max %>
     <% end %>
   <% end %>
 <% else %>
-  <%= insert_slideshow %>
+  <%== insert_slideshow %>
 <% end %>

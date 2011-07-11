@@ -5,8 +5,9 @@ module SlideshowsHelper
       return ''
     end
     @@slideshow_count||= 0
+    @content_for_head_added ||= false
     params[:group]||=""
-    params[:id]||="slider"
+    params[:div_id]||="slides"
     params[:width]||=739
     params[:height]||=341
     params[:taxon]||=false
@@ -17,22 +18,59 @@ module SlideshowsHelper
     params[:start_stopped]||=false
     params[:auto_play]||=true
     params[:max]||=5
+    params[:arrows]||=true
+    params[:arrow_size]||=24
 
-    theslides = slide_panels(params)
-    unless theslides.present?
-        return ''
+    if not @content_for_head_added
+      content_for(:head) { stylesheet_link_tag 'slideshow.css' }
+      content_for(:head) { javascript_include_tag 'slides.min.jquery.js' }
+      @content_for_head_added = true
+    end
+
+    #hook :inside_head_scripts do
+    scripts =  javascript_tag %{ 
+             $(function(){
+                        $("##{params[:div_id]}").slides({
+                                'preload': '#{params[:preload]}',
+                                'preloadImage': '/images/loading.gif',
+                                'play': '5000',
+                                'pause': '2500',
+                                'hoverPause': 'true'
+                        });
+             });
+      }
+    #end
+
+    add_arrows = ""
+    if (params[:arrows])
+      add_arrows = <<-links
+      <a href="#" class="prev"><img src="/images/arrow-prev.png" height="#{params[:arrow_size]}" alt="Previous" /></a>
+      <a href="#" class="next"><img src="/images/arrow-next.png" height="#{params[:arrow_size]}" alt="Next" /></a>
+      links
+    end
+
+    slides_div = ""
+    slides_div << content_tag( :div, :id => "#{params[:div_id]}") do
+      content_tag(:div, slide_images(params), :class => "slides_container")+add_arrows.html_safe
+    end
+
+    add_frame = ""
+    if (params[:frame])
+      add_frame = <<-frame
+                  <img src="/images/frame.png" width="#{params[:width]}" height="#{params[:height]}" alt="Example Frame" id="frame" />
+                  frame
     end
 
     output = ''
-
+      
     @@slideshow_count += 1
-    output << content_tag(:div, theslides.html_safe, :class => 'slideshow', :id => "#{params[:id]}_#{@@slideshow_count}")
-
+    output << content_tag( :div, [slides_div, add_frame, scripts].join("\n").html_safe, :class => "slideshow", :id => "#{params[:id]}_#{@@slideshow_count}")
+           
     output.html_safe
 
   end
 
-  def slide_panels(params)
+  def slide_images(params)
       max = params[:max]
       group = params[:group]
       unless params[:taxon]
@@ -47,6 +85,7 @@ module SlideshowsHelper
             content_tag(:div, slide.body.html_safe, :class => 'textSlide')
           end
         end.join("\n")
+        raw(slides)
       else
         products = Product.in_taxons(params[:taxon]).take(max)
 
@@ -57,6 +96,7 @@ module SlideshowsHelper
           
           link_to(product_image(product, img_options)+raw("<h3 class='product-title'>#{product.name}</h3>"), product, :class => 'product-image', :title => product.name)
         end.join("\n")
+        raw(products)
       end
   end
 
