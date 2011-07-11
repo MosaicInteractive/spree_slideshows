@@ -6,8 +6,8 @@ class Slide < ActiveRecord::Base
   has_attached_file :img,
                     :styles => {
                        :thumb => "100x100#"
-                    },    :url => "/assets/products/:id/:style_:basename.:extension",
-    :path => ":rails_root/public/assets/products/:id/:style_:basename.:extension",
+                    },    :url => "/assets/slides/:id/:style_:basename.:extension",
+    :path => ":rails_root/public/assets/slides/:id/:style_:basename.:extension",
     :storage => Rails.env == 'production' ? 's3' : 'filesystem',
     :s3_credentials => {
       :access_key_id => ENV['S3_KEY'],
