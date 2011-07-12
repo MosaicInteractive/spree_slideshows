@@ -7,13 +7,13 @@ class Slide < ActiveRecord::Base
                     :styles => {
                        :thumb => "100x100#"
                     },    :url => "/assets/slides/:id/:style_:basename.:extension",
-    :path => ":rails_root/public/assets/slides/:id/:style_:basename.:extension",
-    :storage => Rails.env == 'production' ? 's3' : 'filesystem',
-    :s3_credentials => {
-      :access_key_id => ENV['S3_KEY'],
-      :secret_access_key => ENV['S3_SECRET']
-    },
-    :bucket => ENV['S3_BUCKET']
+    :path => ":rails_root/public/assets/slides/:id/:style_:basename.:extension"#,
+    #:storage => Rails.env == 'production' ? 's3' : 'filesystem',
+    #:s3_credentials => {
+    #  :access_key_id => ENV['S3_KEY'],
+    #  :secret_access_key => ENV['S3_SECRET']
+    #},
+    #:bucket => ENV['S3_BUCKET']
 
   scope :included, where(:enabled => true, :included => true)
   scope :not_included, where(:enabled => true, :included => false)
