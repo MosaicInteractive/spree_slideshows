@@ -13,6 +13,9 @@ module SpreeSlideshows
       Spree::BaseController.class_eval do
         helper SlideshowsHelper
       end
+      ProductsController.class_eval do
+        helper SlideshowsHelper
+      end
     end
 
     config.to_prepare &method(:activate).to_proc
