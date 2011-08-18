@@ -1,4 +1,4 @@
-class AddContentToSlideshows < ActiveRecord::Migration
+class AddCaptionToSlideshows < ActiveRecord::Migration
   def self.up
     add_column :slides, :caption, :text
   end
