@@ -26,7 +26,7 @@ module SlideshowsHelper
     output = ''
 
     @@slideshow_count += 1
-    output << content_tag(:div, theslides.html_safe, :class => '.slideshow', :id => "#{params[:id]}_#{@@slideshow_count}")
+    output << content_tag(:div, theslides.html_safe, :class => 'slideshow', :id => "#{params[:id]}_#{@@slideshow_count}")
 
     output.html_safe
 
@@ -44,7 +44,7 @@ module SlideshowsHelper
           if slide.img.present? and slide.img.url.present?
             link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
           else
-            content_tag(:div, slide.body.html_safe, :class => 'textSlide')
+            content_tag(:div, slide.content.html_safe, :class => 'textSlide')
           end
         end.join("\n")
       else
