@@ -82,7 +82,7 @@ module SlideshowsHelper
           if slide.img.present? and slide.img.url.present?
             link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
           else
-            content_tag(:div, slide.body.html_safe, :class => 'textSlide')
+            content_tag(:div, slide.content.html_safe, :class => 'textSlide')
           end
         end.join("\n")
         raw(output)
