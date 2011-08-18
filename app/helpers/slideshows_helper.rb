@@ -42,9 +42,9 @@ module SlideshowsHelper
       
         slides.map do |slide|
           if slide.img.present? and slide.img.url.present?
-            link_to(image_tag(slide.img.url), slide.url, { :title => slide.name })
+            link_to(image_tag(slide.img.url)+content_tag(:div, (slide.caption ? slide.caption.html_safe : ''), :class => 'caption'), slide.url, { :title => slide.name })
           else
-            content_tag(:div, slide.content.html_safe, :class => 'textSlide')
+            content_tag(:div, slide.content.html_safe+content_tag(:div, (slide.caption ? slide.caption.html_safe : ''), :class => 'caption'), :class => 'textSlide')
           end
         end.join("\n")
       else

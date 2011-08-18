@@ -15,12 +15,14 @@ class SpreeSlideshowsHooks < Spree::ThemeSupport::HookListener
   insert_after :inside_head do
     %(<%= stylesheet_link_tag 'slideshow' %>
       <% javascript_tag do %>
-function slideSwitch() {
+        function slideSwitch() {
           $('.slideshow').each(function() {
             if( $('#' + this.id).children().length > 1 ) {
               var $active = $('#' + this.id + ' a.active');
 
-              if( $active.length == 0 ) $active = $('#' + this.id + ' a:last');
+              if( $active.length == 0 ) {
+                $active = $('#' + this.id + ' a:last');
+              }
                                                             
               var $next = $active.next().length ? $active.next() : $('#' + this.id + ' a:first' );
 

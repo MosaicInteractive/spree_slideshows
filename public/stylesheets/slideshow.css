@@ -18,3 +18,10 @@
 .slideshow a.last-active {
   z-index:9;
 }
+.slideshow .caption {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  opacity:0.8;
+  filter:alpha(opacity=80);
+}
