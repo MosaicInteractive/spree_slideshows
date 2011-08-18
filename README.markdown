@@ -1,9 +1,6 @@
 # SUMMARY #
 
 This extension allows easy addition and administration of slideshows in Spree.
-#NOTE
-This version works for heroku and it has been tested with Spree 0.60.x
-
 
 # NOTE #
 
