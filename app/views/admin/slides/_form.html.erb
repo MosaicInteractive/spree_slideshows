@@ -11,18 +11,39 @@
     <%= text_field :slide, :groups  %>
   <% end %>
 
-  <% f.field_container :content do %>
-    <%= f.label :content, t("content") %><br />
-    <%= error_message_on :slide, :content, :class => 'fullwidth content' %>
-    <%= text_area :slide, :content, { "style" => "width:100%"} %>
+  <% field_set_tag 'Slide Content'  do %>
+    <%= radio_button_tag 'slide_type', 'image', true %>
+    <%= label_tag 'slide_type_image', "image" %>
+    <%= radio_button_tag 'slide_type', 'html' %>
+    <%= label_tag 'slide_type_html', "html" %>
+
+    <div id='image-display'>
+      <%= image_tag @slide.img.url(:thumb) if @slide.img? %>
+      <%= f.field_container :img_file_name, :class => 'img-display' do %>
+        <%= f.label :img_file_name, t("filename") %><span class="required">*</span><br />
+        <%= error_message_on :slide, :img_file_name, :class => 'fullwidth title'  %>
+        <%= file_field :slide, :img  %>
+      <% end %>
+    </div>
+    <div id='html-display' style='display:none;'>
+      <%= f.field_container :content do %>
+        <%= f.label :content, t("content") %><br />
+        <%= error_message_on :slide, :content, :class => 'fullwidth content' %>
+        <%= text_area :slide, :content, { "style" => "width:100%"} %>
+      <% end %>
+    </div>
   <% end %>
 
-  <%= image_tag @slide.img.url(:thumb) if @slide.img? %>
+  <%= f.field_container :url do %>
+    <%= f.label :url, t("target_url") %><span class="required">*</span><br />
+    <%= error_message_on :slide, :url, :class => 'fullwidth title'  %>
+    <%= text_field :slide, :url  %>
+  <% end %>
 
-  <% f.field_container :img_file_name do %>
-    <%= f.label :img_file_name, t("filename") %><span class="required">*</span><br />
-    <%= error_message_on :slide, :img_file_name, :class => 'fullwidth title'  %>
-    <%= file_field :slide, :img  %>
+  <%= f.field_container :caption do %>
+    <%= f.label :caption, t("caption") %><br />
+    <%= error_message_on :slide, :caption, :class => 'fullwidth content' %>
+    <%= text_area :slide, :caption, { "style" => "width:100%"} %>
   <% end %>
 
   <% f.field_container :url do %>
@@ -62,3 +83,10 @@
     <%= error_message_on :slide, :position, :class => 'fullwidth title'  %>
     <%= text_field :slide, :position  %>
   <% end %>
+
+<%= javascript_tag do %>
+  $('#slide_type_image,#slide_type_html').click( function(){
+    $('#image-display').toggle();
+    $('#html-display').toggle();
+  });
+<% end %>
